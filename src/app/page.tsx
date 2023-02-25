@@ -7,13 +7,13 @@ import React from 'react';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
-  const [showQuote, setShowQuote] = React.useState<boolean>(false);
   const [life, setLife] = React.useState<string[]>([]);
   const [relationships, setRelationships] = React.useState<string[]>();
   const [success, setSuccess] = React.useState<string[]>();
   const [currentQuote, setCurrentQuote] = React.useState<string>('');
   const [currentIndex, setCurrentIndex] = React.useState<number>(0);
   const [previousIndex, setPreviousIndex] = React.useState<number>(0);
+  const [allQuotes, setAllQuotes] = React.useState<string[]>([]);
 
   React.useEffect(() => {
     const quoteObject = new QuoteObject();
@@ -22,15 +22,9 @@ export default function Home() {
     setRelationships(quotes.relationships);
     setSuccess(quotes.success);
     setCurrentQuote(quotes.life[0]);
+    setAllQuotes(quotes.life.concat(quotes.relationships, quotes.success));
   }, []);
 
-  const handleInitializeQuotes = () => {
-    const quoteObject = new QuoteObject();
-    const quotes = quoteObject.getAllQuotes();
-    setLife(quotes.life);
-    setRelationships(quotes.relationships);
-    setSuccess(quotes.success);
-  };
 
   const handleGetNextQuote = () => {
     const quotes = [life, relationships, success];
@@ -39,21 +33,14 @@ export default function Home() {
     const randomQuoteIndex = Math.floor(
       Math.random() * randomQuote!.length,
     );
-    
     setCurrentIndex(randomQuoteIndex);
     setPreviousIndex(currentIndex);
     return randomQuote![randomQuoteIndex];
   };
 
   const handleGetPreviousQuote = () => {
-    const quotes = [life, relationships, success];
-    setPreviousIndex(currentIndex);
-    const randomQuote = quotes[previousIndex];
-    if (currentIndex === 0) {
-      setPreviousIndex(randomQuote!.length - 1);
-      return randomQuote![randomQuote!.length - 1];
-    }
-    return randomQuote![previousIndex];
+    const index = previousIndex;
+    return allQuotes[index];
   };
 
 
