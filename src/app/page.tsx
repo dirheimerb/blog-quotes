@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import { QuoteCard } from '@/ui/QuoteCard';
 import QuoteObject from '@/lib/quotes';
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -40,8 +41,11 @@ export default function Home() {
     return randomQuote![randomQuoteIndex];
   };
 
+
+
   return (
     <main>
+     
       <QuoteCard
         quote={currentQuote}
         leftClick={() => {
@@ -51,6 +55,7 @@ export default function Home() {
           setCurrentQuote(handleGetNextQuote());
         }}
       />
+
     </main>
   );
 }

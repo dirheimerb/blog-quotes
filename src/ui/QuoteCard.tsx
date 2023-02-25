@@ -1,4 +1,5 @@
 'use client';
+import { motion } from 'framer-motion';
 import React from 'react';
 import LeftButton from './Buttons/LeftArrow';
 import RightButton from './Buttons/RightArrow';
@@ -20,16 +21,41 @@ export function QuoteCard({
   React.useEffect(() => {
     setCurrentQuote(quote);
   }, [quote]);
-
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.5
+      }
+    }
+  }
+  
+  const item = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1 }
+  }
   return (
     <div className={styles.card}>
       <div className={styles.center}>
+      <motion.div
+      className="box"
+      layout style={{ borderRadius: 20 }}
+      transition={{
+        delay: 0.5,
+        x: { duration: 1 },
+        default: { ease: "linear" }
+      }}
+    >
+ 
+      
         <p
           className={styles.quote}
           data-testid="quote"
         >
           {currentQuote}
         </p>
+        </motion.div>
       </div>
       <LeftButton
         classValue={styles.left}
