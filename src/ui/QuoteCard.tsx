@@ -26,35 +26,34 @@ export function QuoteCard({
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.5
-      }
-    }
-  }
-  
+        staggerChildren: 0.5,
+      },
+    },
+  };
+
   const item = {
     hidden: { opacity: 0 },
-    show: { opacity: 1 }
-  }
+    show: { opacity: 1 },
+  };
   return (
     <div className={styles.card}>
       <div className={styles.center}>
-      <motion.div
-      className="box"
-      layout style={{ borderRadius: 20 }}
-      transition={{
-        delay: 0.5,
-        x: { duration: 1 },
-        default: { ease: "linear" }
-      }}
-    >
- 
-      
-        <p
-          className={styles.quote}
-          data-testid="quote"
+        <motion.div
+          className="box"
+          layout
+          style={{ borderRadius: 20 }}
+          transition={{
+            delay: 0.5,
+            x: { duration: 1 },
+            default: { ease: 'linear' },
+          }}
         >
-          {currentQuote}
-        </p>
+          <p
+            className={styles.quote}
+            data-testid="quote"
+          >
+            {currentQuote}
+          </p>
         </motion.div>
       </div>
       <LeftButton
