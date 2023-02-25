@@ -12,6 +12,8 @@ export default function Home() {
   const [relationships, setRelationships] = React.useState<string[]>();
   const [success, setSuccess] = React.useState<string[]>();
   const [currentQuote, setCurrentQuote] = React.useState<string>('');
+  const [currentIndex, setCurrentIndex] = React.useState<number>(0);
+  const [previousIndex, setPreviousIndex] = React.useState<number>(0);
 
   React.useEffect(() => {
     const quoteObject = new QuoteObject();
@@ -37,15 +39,31 @@ export default function Home() {
     const randomQuoteIndex = Math.floor(
       Math.random() * randomQuote!.length,
     );
+    
+    setCurrentIndex(randomQuoteIndex);
+    setPreviousIndex(currentIndex);
     return randomQuote![randomQuoteIndex];
   };
+
+  const handleGetPreviousQuote = () => {
+    const quotes = [life, relationships, success];
+    setPreviousIndex(currentIndex);
+    const randomQuote = quotes[previousIndex];
+    if (currentIndex === 0) {
+      setPreviousIndex(randomQuote!.length - 1);
+      return randomQuote![randomQuote!.length - 1];
+    }
+    return randomQuote![previousIndex];
+  };
+
+
 
   return (
     <main>
       <QuoteCard
         quote={currentQuote}
         leftClick={() => {
-          setCurrentQuote(handleGetNextQuote());
+          setCurrentQuote(handleGetPreviousQuote());
         }}
         rightClick={() => {
           setCurrentQuote(handleGetNextQuote());
